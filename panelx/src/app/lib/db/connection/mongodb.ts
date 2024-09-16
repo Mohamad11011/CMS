@@ -1,23 +1,20 @@
-import { MongoClient, MongoClientOptions } from 'mongodb';
 
-const uri = process.env.MONGODB_URI as string;
+import mongoose, { Connection } from "mongoose";
 
-const options: MongoClientOptions = {};
+let cachedConnection: Connection | null = null;
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
-if (process.env.NODE_ENV === 'development') {
-  
-  if (!(global as any)._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    (global as any)._mongoClientPromise = client.connect();
+export async function connectToMongoDB() {
+  if (cachedConnection) {
+    console.log("Using cached db connection");
+    return cachedConnection;
   }
-  clientPromise = (global as any)._mongoClientPromise;
-} else {
-
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  try {
+    const cnx = await mongoose.connect(process.env.MONGODB_URI!);
+    cachedConnection = cnx.connection;
+    console.log("New mongodb connection established");
+    return cachedConnection;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
-
-export default clientPromise;

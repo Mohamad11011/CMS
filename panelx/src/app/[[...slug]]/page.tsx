@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { auth } from "@/auth";
-import WidgetsBuilder from "./widgetsbuilder";
+import WidgetsBuilder from "./widgetsBuilder";
 export const getSlug = (params: { slug: string | string[] }) => {
   let url = "";
 
@@ -23,11 +23,11 @@ export const getSlug = (params: { slug: string | string[] }) => {
   return url;
 };
 
-export const metadata: Metadata = {
-  title: "AdminX",
-  description:
-    "This is Next.js Dashboard Template Done by Mohamad Hassan web developer",
-};
+// export const metadata: Metadata = {
+//   title: "AdminX",
+//   description:
+//     "This is Next.js Dashboard Template Done by Mohamad Hassan web developer",
+// };
 type Props = {
   params: { slug: string };
 };
@@ -37,7 +37,6 @@ export default async function Home({ params }: Props) {
   const session = await auth();
   // if (session && !session?.user) redirect("/");
 
-  console.log(pathname);
   return (
     <>
       <WidgetsBuilder pathname={pathname} session={session} />

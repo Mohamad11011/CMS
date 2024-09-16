@@ -1,15 +1,15 @@
 import React from "react";
+import { IconProps } from "../types/icon";
 
-type Props = {};
-
-const LoginSvg = (props: Props) => {
+const LoginSvg = ({ className, size=20 }: IconProps) => {
   return (
     <svg
-      width="350"
-      height="350"
+      width={size}
+      height={size}
       viewBox="0 0 350 350"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M33.5825 294.844L30.5069 282.723C25.0538 280.414 19.4747 278.414 13.7961 276.732L13.4079 282.365L11.8335 276.159C4.79107 274.148 0 273.263 0 273.263C0 273.263 6.46998 297.853 20.0448 316.653L35.8606 319.429L23.5737 321.2C25.2813 323.253 27.1164 325.196 29.0681 327.019C48.8132 345.333 70.8061 353.736 78.1898 345.787C85.5736 337.838 75.5526 316.547 55.8074 298.235C49.6862 292.557 41.9968 288.001 34.2994 284.415L33.5825 294.844Z"

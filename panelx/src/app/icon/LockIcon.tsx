@@ -1,16 +1,15 @@
 import React from "react";
+import { IconProps } from "../types/icon";
 
-type Props = {};
-
-const LockIcon = (props: Props) => {
+const LockIcon = ({ className, size=20 }: IconProps) => {
   return (
     <svg
-      className="fill-current"
-      width="22"
-      height="22"
+      width={size}
+      height={size}
       viewBox="0 0 22 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g opacity="0.5">
         <path

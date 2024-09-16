@@ -9,21 +9,35 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import TableOne from "../widgets/tables/Index";
 import { useState, useEffect } from "react";
 import Loader from "../components/common/Loader";
+import Users from "../widgets/users/Index";
 
 type Props = { pathname: any; session?: any };
 
 export default function WidgetsBuilder({ pathname, session }: Props) {
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setLoading(false), 1000);
+  // }, []);
+  // const fetchAllData = async () => {
+  //   const response = await fetch("/api/all");
+
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     setData(data);
+  //   } else {
+  //     alert("Failed to fetch data!");
+  //   }
+  // };
+
   const renderComponent = () => {
     switch (pathname) {
       case "/calendar":
         return <Calendar />;
       case "/profile":
         return <Profile />;
+      case "/users":
+        return <Users />;
       case "/forms/form-elements":
         return <FormElementsPage />;
       case "/tables":
@@ -43,13 +57,11 @@ export default function WidgetsBuilder({ pathname, session }: Props) {
         return <div>404 - Page Not Found</div>;
     }
   };
+  
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <DefaultLayout session={session}>{renderComponent()}</DefaultLayout>
-      )}
+      {/* {loading ? <Loader /> : ""} */}
+      <DefaultLayout session={session}>{renderComponent()}</DefaultLayout>
     </>
   );
 }

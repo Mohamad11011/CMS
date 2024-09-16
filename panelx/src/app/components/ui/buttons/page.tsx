@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import DefaultLayout from "../../Layouts/DefaultLayout";
 import Breadcrumb from "../../Breadcrumbs/Breadcrumb";
 
 export const metadata: Metadata = {

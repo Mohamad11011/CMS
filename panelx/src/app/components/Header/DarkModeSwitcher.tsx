@@ -11,7 +11,7 @@ const DarkModeSwitcher = () => {
 
   if (!mounted) {
     
-    return null;
+    return ;
   }
   return (
     <li>

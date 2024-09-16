@@ -7,8 +7,12 @@ const SwitcherFour = () => {
     <div>
       <label
         htmlFor="toggle4"
-        className="flex cursor-pointer select-none items-center"
+        className="flex flex-col cursor-pointer select-none  text-sm font-medium text-black dark:text-white w-fit"
       >
+        <span className="mb-3">
+        Attach file
+
+        </span>
         <div className="relative">
           <input
             type="checkbox"
