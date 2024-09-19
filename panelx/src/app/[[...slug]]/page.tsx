@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { auth } from "@/auth";
 import WidgetsBuilder from "./widgetsBuilder";
+import { Providers } from "../providers/Provides";
 export const getSlug = (params: { slug: string | string[] }) => {
   let url = "";
 
@@ -39,7 +40,10 @@ export default async function Home({ params }: Props) {
 
   return (
     <>
+    <Providers>
       <WidgetsBuilder pathname={pathname} session={session} />
+    </Providers>
+
     </>
   );
 }

@@ -1,7 +1,9 @@
+"use client";
 import DatePickerOne from "@/app/components/FormElements/DatePicker/DatePickerOne";
 import UserForm from "@/app/components/FormElements/UserForm/Index";
 import SwitcherFour from "@/app/components/Switchers/SwitcherFour";
 import Button from "@/app/components/ui/button/Index";
+import useGetAllUsers from "@/app/hooks/useGetAllUsers";
 import BackIcon from "@/app/icon/BackIcon";
 import DeleteIcon from "@/app/icon/DeleteIcon";
 import EditIcon from "@/app/icon/EditIcon";
@@ -11,23 +13,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Users = () => {
-  const [data, setData] = useState<any>();
+  // const [data, setData] = useState<any>();
   const [show, setShow] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const [updateUser, setUpdateUser] = useState<any>();
   const [activeUserId, setActiveUserId] = useState<any>();
   const [loader, setLoader] = useState<boolean>();
 
-  const fetchAllData = async () => {
-    const response = await fetch("/api/getUsers");
+  const { data, isLoading } = useGetAllUsers();
 
-    if (response.ok) {
-      const data = await response.json();
-      setData(data);
-    } else {
-      alert("Failed to fetch data!");
-    }
-  };
   const deleteUser = async (activeUserId: any) => {
     // Create a new FormData object
     const formData = {
@@ -61,13 +55,10 @@ const Users = () => {
       console.error("Error submitting", error);
     }
   };
-  useEffect(() => {
-    if (!data) fetchAllData();
-  }, []);
 
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+      <div className="px-5 pb-2.5 pt-6 sm:px-7.5 xl:pb-1">
         {show ? (
           <>
             <div className="flex justify-between items-center mb-6">
@@ -86,7 +77,7 @@ const Users = () => {
               <h4 className=" text-xl font-semibold text-black dark:text-white">
                 Update User
               </h4>
-              <Button icon={BackIcon} todo={() => setShow(false)}>
+              <Button icon={BackIcon} todo={() => setUpdateUser(false)}>
                 Back
               </Button>
             </div>
@@ -108,69 +99,77 @@ const Users = () => {
               </Button>
             </div>
 
-            <div className="flex flex-col">
-              <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-                <div className="py-2.5 px-3 xl:p-5 xl:px-6">
+            <div className="flex flex-col  rounded-lg overflow-hidden bg-white dark:bg-boxdark">
+              <div className="grid grid-cols-12 bg-[#F9FAFB] px-5 py-4 dark:bg-meta-4 lg:px-7.5 2xl:px-11">
+                <div className="col-span-3">
                   <h5 className="text-sm font-medium uppercase xsm:text-base"></h5>
                 </div>
-                <div className="p-2.5 text-center xl:p-5 ">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
+                <div className="col-span-3">
+                  <h5 className="font-medium text-[#637381] dark:text-bodydark">
                     Username
                   </h5>
                 </div>
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
+                <div className="col-span-3">
+                  <h5 className="font-medium text-[#637381] dark:text-bodydark">
                     Email
                   </h5>
                 </div>
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
+                <div className="col-span-3">
+                  <h5 className="font-medium text-[#637381] dark:text-bodydark">
                     Actions
                   </h5>
                 </div>
               </div>
 
+              {isLoading && (
+                <>
+                  <div className="border-b border-stroke dark:border-strokedark  h-20 w-full bg-slate-300 dark:bg-slate-600 animate-pulse"></div>
+                  <div className="border-b border-stroke dark:border-strokedark  h-20 w-full bg-slate-300 dark:bg-slate-600 animate-pulse"></div>
+                  <div className="border-b border-stroke dark:border-strokedark  h-20 w-full bg-slate-300 dark:bg-slate-600 animate-pulse"></div>
+                  <div className="h-20 w-full bg-slate-300 dark:bg-slate-600 animate-pulse"></div>
+                </>
+              )}
               {data &&
                 data.map((item: any, index: any) => (
                   <div
-                    className={`grid grid-cols-3 sm:grid-cols-5 ${
-                      index === data.length - 1
+                    className={`grid grid-cols-12 px-5 py-4 lg:px-7.5 2xl:px-11 ${
+                      index === data.length
                         ? ""
-                        : "border-b border-stroke dark:border-strokedark"
+                        : "border-t border-[#EEEEEE] dark:border-strokedark"
                     }`}
                     key={index}
                   >
-                    <div className="flex items-center gap-3 p-2.5 xl:p-5">
-                      <div className="flex-shrink-0">
+                    <div className="col-span-3 flex items-center">
+                      <div className="flex-shrink-0 ">
                         <Image
                           src={item?.image}
                           alt="Brand"
-                          width={48}
-                          height={48}
+                          width={40}
+                          height={40}
                         />
                       </div>
                     </div>
-                    <div className="flex items-center justify-center p-2.5 xl:p-5">
-                      <p className="text-black dark:text-white">
+                    <div className="col-span-3 flex items-center">
+                      <p className="text-[#637381] dark:text-bodydark">
                         {item?.username}
                       </p>
                     </div>
-                    <div className="flex items-center justify-center p-2.5 xl:p-5">
-                      <p className="text-black dark:text-white">
+                    <div className="col-span-3 flex items-center">
+                      <p className="text-[#637381] dark:text-bodydark">
                         {item?.email}
                       </p>
                     </div>
-                    <div className="flex items-center space-x-1 justify-center p-2.5 xl:p-5">
+                    <div className="col-span-3 flex space-x-2 items-center">
                       <div
                         onClick={() => (
                           setShowDelete(true), setActiveUserId(item?._id)
                         )}
                       >
-                        <DeleteIcon className="fill-slate-600 hover:fill-slate-500 cursor-pointer" />
+                        <DeleteIcon className="fill-[#637381] hover:fill-slate-300 cursor-pointer" />
                       </div>
                       <div onClick={() => setUpdateUser(item)}>
                         <EditIcon
-                          className="fill-slate-600 hover:fill-slate-500 cursor-pointer"
+                          className="fill-[#637381] hover:fill-slate-300 cursor-pointer"
                           size={18}
                         />
                       </div>
