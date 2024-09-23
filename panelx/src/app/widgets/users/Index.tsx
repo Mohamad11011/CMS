@@ -22,6 +22,11 @@ const Users = () => {
 
   const { data, isLoading } = useGetAllUsers();
 
+  const resetState = () => {
+    console.log("reset")
+    setUpdateUser(false), setShow(false);
+  };
+
   const deleteUser = async (activeUserId: any) => {
     // Create a new FormData object
     const formData = {
@@ -65,11 +70,15 @@ const Users = () => {
               <h4 className=" text-xl font-semibold text-black dark:text-white">
                 Add New User
               </h4>
-              <Button icon={BackIcon} todo={() => setShow(false)}>
+              <Button icon={BackIcon} todo={() => resetState()}>
                 Back
               </Button>
             </div>
-            <UserForm show={show} className={"shadow-none border-0"} />
+            <UserForm
+              show={show}
+              className={"shadow-none border-0"}
+              resetState={resetState}
+            />
           </>
         ) : updateUser ? (
           <>
@@ -77,7 +86,7 @@ const Users = () => {
               <h4 className=" text-xl font-semibold text-black dark:text-white">
                 Update User
               </h4>
-              <Button icon={BackIcon} todo={() => setUpdateUser(false)}>
+              <Button icon={BackIcon} todo={() => resetState()}>
                 Back
               </Button>
             </div>
@@ -86,6 +95,7 @@ const Users = () => {
               data={updateUser}
               show={show}
               className={"shadow-none border-0"}
+              resetState={resetState}
             />
           </>
         ) : (
